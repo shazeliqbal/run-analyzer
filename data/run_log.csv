@@ -1,0 +1,11 @@
+timestamp,runId,segment,event
+0.0,1,Prologue,START
+35.2,1,Prologue,FAIL
+0.0,2,Prologue,START
+30.5,2,Prologue,SUCCESS
+30.5,2,Chapter1,START
+160.8,2,Chapter1,SUCCESS
+0.0,3,Prologue,START
+29.9,3,Prologue,SUCCESS
+29.9,3,Chapter1,START
+190.0,3,Chapter1,FAIL
