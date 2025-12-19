@@ -34,7 +34,40 @@ public class Main {
         */
 
         RunLogParser parser = new RunLogParser();
-        List<RunEvent> = parser.parse(csvPath);
+        List<RunEvent> events = parser.parse(csvPath);
+
+        /*
+        If the events list are empty, tells the user that you may not have put anything in the actual log itself.
+         */
+
+        if (events.isEmpty()) {
+            System.out.println("No events were detected. Please check to make sure that contents actually exist in the file.");
+            return;
+        }
+
+        /*
+        Creates an analyzer, then feeds it all the parsed run events so it can build up the statistics about the runs
+        and create valuable information from it
+         */
+
+        RunAnalyzer analyzer = new RunAnalyzer();
+        analyzer.ingest(events);
+
+        /*
+        After the analyzer has ingested all the parsed RunEvent objects and built its internal data structures, it then
+        computes the analytics and prints all the results. This will generally include a summary of all the runs.
+         */
+
+        analyzer.computerRecentRuns(10);
+        analyzer.printSummary();
+        System.out.println();
+        analyzer.printTopHrdestSegments(5);
+        System.out.println();
+        analyzer.printRecentWindowSummary();
+
+
+
+
 
     }
 }
