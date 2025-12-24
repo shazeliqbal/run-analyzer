@@ -23,4 +23,49 @@ import java.util.List;
 
 public class RunLogParser {
 
+    public List<RunEvent> parse(Path path) {
+
+        List<RunEvent> events = new ArrayList<>();
+
+        try (BufferedReader reader = Files.newBufferedReader(path)) {
+            String line;
+            boolean firstLine = true;
+
+            while ((line = reader.readLine()) != null) {
+                line = line.trim();
+                if (line.isEmpty()) {
+                    continue;
+                }
+
+
+                if (firstLine && line.toLowerCase().startsWith("timestamp")) {
+                    firstLine = false;
+                    continue;
+                }
+
+                firstLine = false;
+
+                String[] parts = line.split(",");
+                if (parts.length < 4) {
+                    continue;
+                }
+
+                long timestamp = Long.parseLong(parts[0].trim());
+                String runId = parts[1].trim();
+                String segmentId = parts[2].trim();
+                EventType eventType = EventType.fromString(parts[3].trim());
+                events.add(event);
+
+                RunEvent event = new RunEvent(timestamp, runId, segmentId, eventType);
+                events.add(event);
+            }
+
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return events;
+
+    }
 }
